@@ -1,0 +1,8 @@
+# Deck Scripts
+
+A collection of helpful scripts to run on the steam deck. So far this list
+includes:
+
+- InstallXboxdrv: Replace the Xpad driver with Xboxdrv to support controller
+		  hotplugging.
+- EnableXpad: Stop any running Xboxdrv daemons and re-enable the Xpad driver.

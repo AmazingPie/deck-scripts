@@ -1,0 +1,8 @@
+[Unit]
+Description=Xboxdrv driver service
+
+[Service]
+ExecStart=/home/deck/git/xboxdrv/scripts/InstallXboxdrv.sh
+
+[Install]
+WantedBy=multi-user.target

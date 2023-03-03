@@ -1,5 +1,7 @@
 #!/bin/bash
 
+XBOXDRV_BIN="/home/deck/git/xboxdrv/xboxdrv"
+
 # We need to run this as root.
 if [ "$EUID" -ne 0 ]
   then echo "ERROR: Not running as root."
@@ -20,11 +22,13 @@ sudo usermod -a -G input deck
 
 echo "Setup complete, starting xboxdrv..."
 
-# Needed to ensure dbus is setup correctly for debugging.
-DBUS_CMD="dbus-launch --exit-with-session"
+# Needed to ensure dbus is setup correctly for debugging. Not needed for
+# standard runs.
+#DBUS_CMD="dbus-launch --exit-with-session"
 
 # Run xboxdrv in daemon mode.
-$DBUS_CMD /home/deck/git/xboxdrv/xboxdrv/xboxdrv \
+${XBOXDRV_BIN}/xboxdrv \
+	--dbus disabled \
 	--daemon \
 	--silent \
 	--detach \
@@ -32,5 +36,3 @@ $DBUS_CMD /home/deck/git/xboxdrv/xboxdrv/xboxdrv \
 	--next-controller \
 	--next-controller \
 		--guitar
-
-

@@ -3,6 +3,49 @@
 A collection of helpful scripts to run on the steam deck. So far this list
 includes:
 
-- InstallXboxdrv: Replace the Xpad driver with Xboxdrv to support controller
-		  hotplugging.
-- EnableXpad: Stop any running Xboxdrv daemons and re-enable the Xpad driver.
+- InstallXboxdrvSD: Replace the Xpad driver with Xboxdrv to support
+		    controller hotplugging.
+- EnableXpad: 	    Stop any running Xboxdrv daemons and re-enable the Xpad
+                    driver.
+- xboxdrv.service:  An example systemd service file to run xboxdrv at
+                    startup.
+
+## Installing xboxdrv
+The InstallXboxdrvSD.sh script requires a compiled (doesn't need to be
+installed) version of [xboxdrv](https://xboxdrv.gitlab.io/) this can be be
+obtained via the ubuntu packages or from the
+[source](https://gitlab.com/xboxdrv/xboxdrv/-/tree/stable).
+
+If compiling from the source make sure to use the stable and not the dev
+branch. The dev branch does not appear to work with the Steam Deck.
+
+Note: SteamOS is based on Arch and therefore can't use ubuntu packages and I
+had trouble compiling on the steam deck itself. I recommend compiling on
+another machine first and then transferring to the Steam Deck via a USB or SD
+card.
+
+Once xboxdrv has been built and transferred to your Deck, simply update the
+XBOXDRV_BIN variable in the InstallXboxdrvSD.sh script with the path of your
+xboxdrv binary folder and the script can be run as needed.
+
+## Setting up a systemd service
+Setting up a systemd service can be simple by using the provided
+xboxdrv.service file. Simply update this service file with the path to the
+InstallXboxdrvSD.sh script and then run the following:
+```
+$ sudo cp <path-to-xboxdrv.service> /etc/systemd/system/
+$ sudo systemctl enable xboxdrv.service
+```
+
+You can check the service is running correctly by running the following:
+```
+$ sudo systemctl start xboxdrv.service
+$ systemctl status xboxdrv.service
+```
+
+## Xboxdrv Configuration
+When xboxdrv is setup as a daemon, it needs to be told what controllers to
+expect so it can correctly assign slots. Currently 4 Xbox 360 controllers are
+assigned, including one which is an Xbox 360 guitar. This setup can be
+modified to suit the controllers you have and further details can be found on
+the [xboxdrv docs](https://xboxdrv.gitlab.io/xboxdrv.html)

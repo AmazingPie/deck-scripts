@@ -15,12 +15,14 @@ sudo steamos-readonly disable
 modprobe -r xpad
 echo "blacklist xpad" | sudo tee -a /etc/modprobe.d/blacklist.conf > /dev/null
 
+echo "INFO: Disabled Xpad."
+
 # Allow userspace progs to create and handle input devices.
 modprobe uinput
 modprobe joydev
 sudo usermod -a -G input deck
 
-echo "Setup complete, starting xboxdrv..."
+echo "INFO: Setup complete, starting xboxdrv..."
 
 # Needed to ensure dbus is setup correctly for debugging. Not needed for
 # standard runs.
@@ -36,3 +38,5 @@ ${XBOXDRV_BIN}/xboxdrv \
 	--next-controller \
 	--next-controller \
 		--guitar
+
+echo "INFO: Successfully started xboxdrv daemon."
